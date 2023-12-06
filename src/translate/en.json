@@ -1,0 +1,44 @@
+{
+  "Head": {
+    "discover": "Discover",
+    "blog": "Blog",
+    "contactUs": "Contact Us",
+    "aboutUs": "About Us"
+  },
+
+  "Navbar": {
+    "create": "Create",
+    "wishlist": "Wishlist",
+    "cart": "Cart",
+    "user": "User",
+    "search": "Search"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, ar {Arabic} en {English} other {Unknown}}"
+  },
+  "Home": {
+    "introduction": "Create and sell custom products <span class='text-primary'> online</span>",
+    "description": "Create your one store and my your design in live",
+    "NewDesign": "Make New Design",
+    "BrowseProducts": "Browse Products",
+    "perks": {
+      "shipping": {
+        "name": "Free Shipping & Returns",
+        "description": "For all orders over 6000 DZD"
+      },
+      "payment": {
+        "name": "Secure Payment",
+        "description": "We ensure secure payment"
+      },
+      "money": {
+        "name": "Money Back Guarantee",
+        "description": "Any back within 30 days"
+      },
+      "support": {
+        "name": "Customer Support",
+        "description": "Call or email us 24/7"
+      }
+    }
+  }
+}

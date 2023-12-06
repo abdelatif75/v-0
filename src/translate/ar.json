@@ -1,0 +1,46 @@
+{
+  "Head": {
+    "discover": "يكتشف",
+    "blog": "مدونة",
+    "contactUs": "اتصل بنا",
+    "aboutUs": "معلومات عنا"
+  },
+
+  "Navbar": {
+    "create": "انشاء",
+    "wishlist": "الرغبات",
+    "cart": "عربة ",
+    "user": "مستخدم",
+    "search": "يبحث"
+  },
+
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, ar {Arabic} en {English} other {Unknown}}"
+  },
+
+  "Home": {
+    "introduction": "إنشاء وبيع منتجات مخصصة<span class='text-primary'> عبر الإنترنت</span>",
+    "description": "قم بإنشاء متجرك الوحيد وتصميمي الخاص بك على الهواء مباشرة",
+    "NewDesign": "قم بإنشاء منتجك الأول من التصميم المفضل لديك",
+    "BrowseProducts": "تصفح المنتجات",
+    "perks": {
+      "shipping": {
+        "name": "الشحن والإرجاع المجاني",
+        "description": "لجميع الطلبات انتهت 6000 DZD"
+      },
+      "payment": {
+        "name": "دفع امن",
+        "description": "نحن نضمن الدفع الآمن"
+      },
+      "money": {
+        "name": "ضمان استعادة الاموال",
+        "description": "أي عودة في غضون 30 يوما"
+      },
+      "support": {
+        "name": "دعم العملاء",
+        "description": "اتصل بنا أو راسلنا عبر البريد الإلكتروني 24/7"
+      }
+    }
+  }
+}

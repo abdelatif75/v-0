@@ -1,0 +1,254 @@
+//provider = "sqlite"
+//url      = env("DATABASE_URL")
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model ProductColor {
+  id                 String           @id @default(cuid())
+  color              String?          @default("#fff")
+  productsSubGroupId String
+  ProductsSubGroup   ProductsSubGroup @relation(fields: [productsSubGroupId], references: [id], onDelete: Cascade)
+  ProductImg         ProductImg[]
+}
+
+model ProductImg {
+  id                   String       @id @default(cuid())
+  title                String
+  imageFullPath        String
+  ProductColorId       String
+  ProductColor         ProductColor @relation(fields: [ProductColorId], references: [id], onDelete: Cascade)
+}
+
+model Products {
+  id                String            @id @default(cuid())
+  title             String
+  discription       String?
+  categoryId        String
+  prix              Int?
+  active            Boolean           @default(false)
+  productCategories productCategories @relation(fields: [categoryId], references: [id], onDelete: NoAction)
+  productsSubGroup  ProductsSubGroup[]
+  productAtts       ProductAtts[]
+}
+
+model ProductsSubGroup {
+  id           String         @id @default(cuid())
+  dx           Int?
+  dy           Int?
+  dh           Int?
+  dw           Int?
+  x1           Int?
+  y1           Int?
+  x2           Int?
+  y2           Int?
+  ProductColor ProductColor[]
+  productId    String
+  products     Products       @relation(fields: [productId],references: [id],onDelete: Cascade)
+  designImageInProduct DesignImageInProduct[]
+}
+
+model SelectedCategory {
+  id                String              @id @default(cuid())
+  productCategories productCategories[]
+}
+
+model ProductAtts {
+  id                 String        @id @default(cuid())
+  name               String
+  tier               Int           @default(1)
+  titleAtts          Boolean       @default(true)
+  parentProductAttId String?
+  productsId         String
+  productAtts        ProductAtts?  @relation("productAttsToproductAtts", fields: [parentProductAttId], references: [id], onDelete: Cascade)
+  other_productAtts  ProductAtts[] @relation("productAttsToproductAtts")
+  products           Products      @relation(fields: [productsId], references: [id], onDelete: Cascade)
+
+  @@unique([name, parentProductAttId])
+}
+
+model productCategories {
+  id                      String              @id @default(cuid())
+  createdAt               DateTime            @default(now())
+  updatedAt               DateTime?
+  name                    String
+  description             String?
+  tier                    Int                 @default(1)
+  parentCategoryId        String?
+  selectedCategoresId     String?
+  Products                Products[]
+  productCategories       productCategories?  @relation("productCategoriesToproductCategories", fields: [parentCategoryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  other_productCategories productCategories[] @relation("productCategoriesToproductCategories")
+  SelectedCategory        SelectedCategory?   @relation(fields: [selectedCategoresId], references: [id], onDelete: NoAction)
+
+  @@unique([name, parentCategoryId])
+  @@index([tier])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                String              @id @default(cuid())
+  name              String?
+  email             String?             @unique
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  payentMethod      PayentMethod[]
+  sessions          Session[]
+  shippingAddresses ShippingAddresses[]
+  storeRole         StoreRole[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model PersonalizationMethod {
+  id          String @id @default(uuid())
+  name        String
+  description String
+}
+
+model StoreRole {
+  id      String  @id @default(uuid())
+  role    String? @default("admin")
+  storeId String?
+  userId  String
+  store   Store?   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Store {
+  id          String       @id @default(uuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?    @updatedAt
+  name        String
+  cover       String?
+  profile     String?
+  description String?
+  collections Collection[]
+  storeRole   StoreRole[]
+}
+
+model Collection {
+  id                String   @id @default(uuid())
+  name              String
+  storeId           String
+  store             Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  designInformation DesignInformation[]
+}
+
+model DesignInformation {
+  id                String     @id @default(uuid())
+  name              String
+  description       String?
+  collectionId      String
+  collection        Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  designImageGroup  DesignImageGroup[]
+  processingMethod  ProcessingMethod[]
+  designImageInProduct  DesignImageInProduct[]
+}
+
+model DesignImageGroup {
+  id                    String     @id @default(uuid())
+  path                  String
+  index                 Int
+  designInformationId   String
+  designInformation     DesignInformation @relation(fields: [designInformationId],references: [id],onDelete: Cascade)
+  designImageInProduct  DesignImageInProduct[]
+}
+
+model DesignImageInProduct {
+  id                 String           @id @default(uuid())
+  dx                 Int?
+  dy                 Int?
+  dw                 Int?
+  dh                 Int?
+  active             Boolean?         @default(false)
+  imagePath          String?
+  designImageGroupId String?
+  productsSubGroupId String
+  designInformationId String
+  designImageGroup   DesignImageGroup? @relation(fields: [designImageGroupId],references: [id])
+  productsSubGroup   ProductsSubGroup @relation(fields: [productsSubGroupId],references: [id])
+  designInformation  DesignInformation @relation(fields: [designInformationId],references: [id])
+
+}
+
+model PayentMethod {
+  id      String    @id @default(cuid())
+  userId  String
+  title   String?
+  dahabya Dahabya[]
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ProcessingMethod {
+  id      String    @id @default(cuid())
+  type    String?    @default("Printing")
+  designInformationId String
+  designInformation DesignInformation @relation(fields: [designInformationId],references: [id],onDelete: Cascade,onUpdate: NoAction)
+}
+
+model UserProducts {
+  id      String    @id @default(cuid())
+}
+
+model Dahabya {
+  id             String       @id @default(cuid())
+  name           String
+  cardNumber     String
+  expiresDay     String
+  cvc            Int
+  payentMethodId String
+  payentMethod   PayentMethod @relation(fields: [payentMethodId], references: [id], onDelete: Cascade)
+}
+
+model ShippingAddresses {
+  id          String  @id @default(cuid())
+  name        String
+  email       String?
+  phone       String
+  stateWilaya String
+  fullAdress  String
+  zipCode     Int
+  userId      String
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
