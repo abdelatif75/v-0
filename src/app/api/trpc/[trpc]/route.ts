@@ -4,8 +4,8 @@ import {
 } from "@trpc/server/adapters/fetch"
 import { appRouter } from "@/server/api/index"
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/services/authOptions"
 
 const handler = (req: Request) =>
   fetchRequestHandler({

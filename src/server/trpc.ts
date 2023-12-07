@@ -1,10 +1,9 @@
+import { getServerAuthSession } from "@/services/authOptions"
 import { initTRPC, TRPCError } from "@trpc/server"
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next"
 import { type Session } from "next-auth"
 
 import { ZodError } from "zod"
-
-import { getServerAuthSession } from "@/app/api/auth/[...nextauth]/route"
 
 interface CreateContextOptions {
   session: Session | null

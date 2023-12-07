@@ -19,6 +19,7 @@ export default function UserShortcut({
       <DropdownMenu>
         <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
         <DropdownMenuContent className='w-56'>
+          <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <User className='mr-2 h-4 w-4' />
@@ -46,6 +47,7 @@ export default function UserShortcut({
               Support
             </Link>
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
         </DropdownMenuContent>
       </DropdownMenu>
     </>

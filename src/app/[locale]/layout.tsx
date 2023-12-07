@@ -6,10 +6,10 @@ import useTextDirection from '@/lib/useTextDirection'
 import { unstable_setRequestLocale } from 'next-intl/server'
 import './globals.css'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../api/auth/[...nextauth]/route'
 import SessionProvider from '@/lib/Providers/SessionProvider'
 import { NextIntlClientProvider } from 'next-intl'
 import Provider from '@/lib/Providers/Provider'
+import { authOptions } from '@/services/authOptions'
 
 const inter = Inter({ subsets: ['latin'] })
 const cairo = Cairo({ subsets: ['latin'] })

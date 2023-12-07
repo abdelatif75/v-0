@@ -65,7 +65,7 @@ export default function Navbar() {
               </div>
               <div className='flex items-end md:w-1/2 md:justify-end'>
                 <ul className='flex items-center gap-6'>
-                  {session ? (
+                  {!session ? (
                     <button onClick={() => signIn()}>Sign in</button>
                   ) : (
                     LinkIcon.map((item, index) => (
